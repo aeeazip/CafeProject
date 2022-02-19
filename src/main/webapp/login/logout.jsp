@@ -11,6 +11,7 @@
 
 
 <%
+	session.removeAttribute("id");
 	session.invalidate(); // 세션을 빼앗아 종료시킨다
 %>
 

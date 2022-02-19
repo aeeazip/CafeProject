@@ -1,13 +1,16 @@
 package com.project.dao;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import com.project.dto.*;
+import com.project.dto.UserDTO;
+
 
 public class UserDAO {
+	
 	
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
@@ -19,6 +22,8 @@ public class UserDAO {
 	private String id = "shun04321";
 	private String pw = "awstbs421!";
 	
+	
+	
 	public UserDAO() {
 		
 		try {
@@ -28,6 +33,8 @@ public class UserDAO {
 		catch(Exception e) {
 			System.out.println(e);
 		}
+		
+		
 		
 	}
 	
@@ -48,8 +55,8 @@ public class UserDAO {
 			
 			int update = pstmt.executeUpdate();
 			
-			if(update == 0) System.out.println("DB ì—…ë°ì´íŠ¸ ì‹¤íŒ¨");
-			else System.out.println("DB ì—…ë°ì´íŠ¸ ì„±ê³µ");
+			if(update == 0) System.out.println("DB ¾÷µ¥ÀÌÆ® ½ÇÆĞ");
+			else System.out.println("DB ¾÷µ¥ÀÌÆ® ¼º°ø");
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -63,7 +70,7 @@ public class UserDAO {
 		}
 	}
 	
-	//ë¡œê·¸ì¸ ì§„í–‰í•˜ëŠ” í•¨ìˆ˜
+	//·Î±×ÀÎ ÁøÇàÇÏ´Â ÇÔ¼ö
 	public int login(String user_id, String user_pwd) {
 		String sql = "SELECT user_pwd FROM user where user_id = ?";
 		
@@ -73,14 +80,14 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				if(rs.getString(1).equals(user_pwd)) return 1; //ë¡œê·¸ì¸ ì„±ê³µ
-				else return 0; //ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜
+				if(rs.getString(1).equals(user_pwd)) return 1; //·Î±×ÀÎ ¼º°ø
+				else return 0; //ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡
 			}
-			return -1; //ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””
+			return -1; //Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğ
 		}catch (Exception e) {
 			System.out.println(e);// TODO: handle exception
 		}
-		return -2; //ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë£Œ
+		return -2; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·á
 	}
 	
 	public boolean resign(String user_id, String user_pwd) {

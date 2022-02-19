@@ -15,6 +15,8 @@
 				location.href="index.jsp?contentPage=test.jsp";
 			else if(value=="3")
 				location.href="index.jsp?contentPage=test.jsp";
+			else if(value=="4")
+				location.href="index.jsp?contentPage=../review/reviewList.jsp";
 		}
 
 </script>

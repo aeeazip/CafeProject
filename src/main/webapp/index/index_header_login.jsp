@@ -13,6 +13,7 @@
 			<span class="header-menu" onclick="changeView1(1)" >ABOUT US</span>
 			<span class="header-menu" onclick="changeView1(2)" >MENU</span>
 			<span class="header-menu" onclick="changeView1(3)" >NOTICE BOARD</span>
+			<span class="header-menu" onclick="changeView1(4)" >REVIEW</span>
 	</div>
 
 	<div class="logo-box">
