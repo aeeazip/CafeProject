@@ -1,6 +1,5 @@
 <!-- 작성폼 -->
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%@ page import="java.util.*" %>
@@ -14,12 +13,13 @@
 		pageContext.forward("../login/login.jsp");
 	}
 	
-	String productName = request.getParameter("product");
 	ProductDAO product = new ProductDAO();
-	String image = product.imageSrc(productName);
+	
+	String productName = request.getParameter("product");
+	String image = "../images/" + product.imageSrc(productName);
 	String intro = product.productIntro(productName);
 %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="EUC-KR">
@@ -57,18 +57,18 @@
 		<br>
 		<div class="intro"><%=intro%></div>
 	</div>
-	<form name="writeForm" method="get" action="../review/reviewDB.jsp">
+	<form name="writeForm" method="get" action="../review/reviewDB.jsp" accept-charset="UTF-8">
 		<table align="center" class="reviewTable" height="600px">
 			<tr>
-				<td>작성자</td>
+				<td width="15%">작성자</td>
 				<td style="font-size: 30px;">&nbsp;${sessionScope.id}님</td>
 			</tr>
 			<tr>
-				<td>상품</td>
+				<td width="15%">상품</td>
 				<td style="font-size: 30px;">&nbsp;<%=request.getParameter("product") %></td>
 			</tr>
 			<tr>
-				<td>별점</td>
+				<td width="15%">별점</td>
 				<td>
 					<div class="star-rating space-x-4 mx-auto">
 						<input type="radio" id="5-stars" name="rating" value="5" v-model="ratings" checked/>
@@ -85,9 +85,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>내용</td>
+				<td width="15%">내용</td>
 				<td>
-					<textarea id="reviewContent" name="reviewContent" rows="25" cols="200" placeholder="후기를 남겨주세요.."></textarea>
+					<textarea name="reviewContent" rows="25" cols="200" placeholder="후기를 남겨주세요.."></textarea>
 				</td>
 			</tr>
 		</table>

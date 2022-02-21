@@ -48,8 +48,8 @@ public class ProductDAO {
 			
 			int update = pstmt.executeUpdate();
 			
-			if(update == 0) System.out.println("DB ¾÷µ¥ÀÌÆ® ½ÇÆÐ");
-			else System.out.println("DB ¾÷µ¥ÀÌÆ® ¼º°ø");
+			if(update == 0) System.out.println("DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½");
+			else System.out.println("DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½");
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -64,26 +64,26 @@ public class ProductDAO {
 	}
 	
 	public String imageSrc(String productName) {
+		String src = null;
 		try {
 			Class.forName(jdbc_driver);
 			conn = DriverManager.getConnection(jdbc_url, id, pw);
 			
-			String sql = "select product_img from product where productName=?;";
+			String sql = "select product_img from product where product_name=?;";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, productName);
 			rs = pstmt.executeQuery();
 			
-			String src=null;
 			while(rs.next()) {
-				src=rs.getString("product_img");
+				src=rs.getString(1);
 			}
 			return src;
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		return null;
+		return src;
 	}
 	
 	public String productIntro(String productName) {
@@ -129,6 +129,6 @@ public class ProductDAO {
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		return -1; // µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return -1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 }

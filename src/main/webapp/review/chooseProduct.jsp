@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%@ page import="java.util.*" %>
@@ -13,22 +12,22 @@
 		pageContext.forward("../login/login.jsp");
 	}
 	
-	// order_detail Å×ÀÌºí¿¡¼­ ·Î±×ÀÎÇÑ À¯Àú ¾ÆÀÌµð¿Í °°Àº ÇàÀÇ write_review°¡ 0ÀÎ ·¹ÄÚµå°¡ ÀÖ´ÂÁö °Ë»ç
-	//(¾øÀ¸¸é reviewList.jsp·Î ÀÌµ¿ / ÀÖÀ¸¸é ¿©·¯°³ÀÇ product_id Áß ÇÏ³ª ¼±ÅÃÇØ¼­ Æû ÀÛ¼ºÇÒ ¼ö ÀÖµµ·Ï ÇÏ±â)
+	// order_detail í…Œì´ë¸”ì—ì„œ ë¡œê·¸ì¸í•œ ìœ ì € ì•„ì´ë””ì™€ ê°™ì€ í–‰ì˜ write_reviewê°€ 0ì¸ ë ˆì½”ë“œê°€ ìžˆëŠ”ì§€ ê²€ì‚¬
+	//(ì—†ìœ¼ë©´ reviewList.jspë¡œ ì´ë™ / ìžˆìœ¼ë©´ ì—¬ëŸ¬ê°œì˜ product_id ì¤‘ í•˜ë‚˜ ì„ íƒí•´ì„œ í¼ ìž‘ì„±í•  ìˆ˜ ìžˆë„ë¡ í•˜ê¸°)
 	OrderDAO order_dao = new OrderDAO();
 	int flag = order_dao.isBought(id);
 	
 	if(flag==-1 || flag==0){
 %>
 	<script>
-		alert('¸®ºä¸¦ ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù.');
+		alert('ë¦¬ë·°ë¥¼ ìž‘ì„±í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.');
 		history.back();
 	</script>
 <%
 	}
 	
 	List<OrderDetailDTO> list = new ArrayList<OrderDetailDTO>();
-	list = order_dao.orderList(id); // write_review 0ÀÎ ÁÖ¹®µé ¹ÝÈ¯
+	list = order_dao.orderList(id); // write_review 0ì¸ ì£¼ë¬¸ë“¤ ë°˜í™˜
 %>
 
 <!DOCTYPE html>
@@ -52,7 +51,7 @@
 	<center>
 	<div class="chooseProduct">
 	<br>
-		<p class="selectProduct">¸®ºä¸¦ ÀÛ¼ºÇÒ »óÇ°À» ¼±ÅÃÇÏ¼¼¿ä :)</p><br>
+		<p class="selectProduct">ë¦¬ë·°ë¥¼ ìž‘ì„±í•  ìƒí’ˆì„ ì„ íƒí•˜ì„¸ìš” :)</p><br>
 	<form name="chooseProduct" method="post" action="../index/index.jsp?contentPage=../review/reviewForm.jsp">
 		<select name="product" style="width:200px;height:30px;">
 			<%
@@ -63,7 +62,7 @@
 				}
 			%>
 		</select>
-		<input type="submit" value="¸®ºäÀÛ¼º">
+		<input type="submit" value="ë¦¬ë·°ìž‘ì„±">
 	</form>
 	</div>
 	</center>

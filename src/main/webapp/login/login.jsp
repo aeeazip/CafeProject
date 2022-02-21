@@ -99,7 +99,7 @@
     </script>
 </head>
 <body>
-<form name="login_form" action="../login/login_action.jsp" onsubmit="return checkValue();" method="post">
+<form name="login_form" action="../login/login_action.jsp" onsubmit="return checkValue();" method="post"> <!-- 바뀐 부분 -->
  
             <header>
             <h1>SIGN IN</h1>

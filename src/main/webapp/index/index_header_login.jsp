@@ -12,8 +12,8 @@
 			<span class="header-menu" onclick="changeView1(0)" >HOME</span>
 			<span class="header-menu" onclick="changeView1(1)" >ABOUT US</span>
 			<span class="header-menu" onclick="changeView1(2)" >MENU</span>
-			<span class="header-menu" onclick="changeView1(3)" >NOTICE BOARD</span>
-			<span class="header-menu" onclick="changeView1(4)" >REVIEW</span>
+			<span class="header-menu" onclick="changeView1(3)" >Q&A</span>
+			<span class="header-menu" onclick="changeView1(5)" >REVIEW</span> <!-- ¹Ù²ï ºÎºÐ -->
 	</div>
 
 	<div class="logo-box">

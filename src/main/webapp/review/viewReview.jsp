@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
@@ -37,33 +36,33 @@
 	<table class="individualReview">
 		<c:forEach var="list" items="${newList}">
 			<tr height="40" style="background-color: #F9F9F9;">
-				<td style="background-color: #EEEEEE;">¸®ºä¹øÈ£</td>
+				<td style="background-color: #EEEEEE;">ë¦¬ë·°ë²ˆí˜¸</td>
 				<td>${list.reviewID}</td>
 			</tr>
 			<tr height="40" style="background-color: #F9F9F9;">
-				<td style="background-color: #EEEEEE;">ÀÛ¼ºÀÚ</td>
+				<td style="background-color: #EEEEEE;">ì‘ì„±ì</td>
 				<td>${list.userID}</td>
 			</tr>
 			<tr height="40" style="background-color: #F9F9F9;">
-				<td style="background-color: #EEEEEE;">ÀÛ¼ºÀÏÀÚ</td>
+				<td style="background-color: #EEEEEE;">ì‘ì„±ì¼ì</td>
 				<td>${list.date}</td>
 			</tr>
 			<tr height="40" style="background-color: #F9F9F9;">
-				<td style="background-color: #EEEEEE;">¸Ş´º</td>
+				<td style="background-color: #EEEEEE;">ë©”ë‰´</td>
 				<td>${list.productName}</td>
 			</tr>
 			<tr height="40" style="background-color: #F9F9F9;">
-				<td style="background-color: #EEEEEE;">º°Á¡</td>
+				<td style="background-color: #EEEEEE;">ë³„ì </td>
 				<td>${list.grade}</td>
 			</tr>
 			<tr height="40" style="background-color: #F9F9F9;">
-				<td style="background-color: #EEEEEE;">³»¿ë</td>
+				<td style="background-color: #EEEEEE;">ë‚´ìš©</td>
 				<td>${list.review_content}</td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br>
-	<input type="button" value="ÀÌÀü" onclick="history.go(-1)">
+	<input type="button" value="ì´ì „" onclick="history.go(-1)">
 	<br><br>
 	</center>
 </body>

@@ -35,7 +35,7 @@ public class OrderDAO {
 	}
 
 	
-	// ÁÖ¹®ÀÏÀÚ ¸Ş¼Òµå
+	// ì£¼ë¬¸ì¼ì ë©”ì†Œë“œ
 	public String getDate() {
 		String sql = "select now()";
 		try {
@@ -47,13 +47,13 @@ public class OrderDAO {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ""; //µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù
+		return ""; //ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 
 	
-	// ÁÖ¹®¹øÈ£(order_id) ºÎ¿© ¸Ş¼Òµå
+	// ì£¼ë¬¸ë²ˆí˜¸(order_id) ë¶€ì—¬ ë©”ì†Œë“œ
 	public int getNext() {
-		//ÇöÀç ¸®ºä °Ô½ÃÆÇÀ» ³»¸²Â÷¼øÀ¸·Î Á¶È¸ÇÏ¿© °¡Àå ¸¶Áö¸· ±ÛÀÇ ¹øÈ£¸¦ ±¸ÇÑ´Ù
+		//í˜„ì¬ ë¦¬ë·° ê²Œì‹œíŒì„ ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ì¡°íšŒí•˜ì—¬ ê°€ì¥ ë§ˆì§€ë§‰ ê¸€ì˜ ë²ˆí˜¸ë¥¼ êµ¬í•œë‹¤
 		String sql = "select order_id from order order by order_id desc";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -61,14 +61,14 @@ public class OrderDAO {
 			if(rs.next()) {
 				return rs.getInt(1) + 1;
 			}
-			return 1; //Ã¹ ¹øÂ° °Ô½Ã¹°ÀÎ °æ¿ì
+			return 1; //ì²« ë²ˆì§¸ ê²Œì‹œë¬¼ì¸ ê²½ìš°
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1; //µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù
+		return -1; //ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 	
-	// order_detail Å×ÀÌºí¿¡ °³º° ÁÖ¹® »óÇ° µî·Ï
+	// order_detail í…Œì´ë¸”ì— ê°œë³„ ì£¼ë¬¸ ìƒí’ˆ ë“±ë¡
 	public int insertOrderDetail(OrderDetailDTO orderdetail, String userId, int orderId) {
 		try {
 			Class.forName(jdbc_driver);
@@ -88,10 +88,10 @@ public class OrderDAO {
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		return -1; // µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return -1; // ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 	
-	// ÁÖ¹® µî·Ï ¸Ş¼Òµå
+	// ì£¼ë¬¸ ë“±ë¡ ë©”ì†Œë“œ
 	public int insertOrder(String userId) {
 		try {
 			Class.forName(jdbc_driver);
@@ -107,18 +107,18 @@ public class OrderDAO {
 			
 			int update = pstmt.executeUpdate();
 			
-			if(update == 0) System.out.println("DB ¾÷µ¥ÀÌÆ® ½ÇÆĞ");
-			else System.out.println("DB ¾÷µ¥ÀÌÆ® ¼º°ø");
+			if(update == 0) System.out.println("DB ì—…ë°ì´íŠ¸ ì‹¤íŒ¨");
+			else System.out.println("DB ì—…ë°ì´íŠ¸ ì„±ê³µ");
 			
 			return orderId;
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		return -1; // µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return -1; // ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 
-	// ±¸¸Å±â·Ï ÀÖ´Âµ¥ ÀÛ¼ºÇÑ ¸®ºä°¡ ¾ø´ÂÁö °Ë»ç
+	// êµ¬ë§¤ê¸°ë¡ ìˆëŠ”ë° ì‘ì„±í•œ ë¦¬ë·°ê°€ ì—†ëŠ”ì§€ ê²€ì‚¬
 	public int isBought(String userId) {
 		try {
 			Class.forName(jdbc_driver);
@@ -131,18 +131,18 @@ public class OrderDAO {
 					
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				if(rs.getInt(1) == 0) return 0; // ±¸¸Å X or ÀÛ¼ºÇÒ ¸®ºä X
-				else return 1; // ¸®ºä ÀÛ¼º °¡´É
+				if(rs.getInt(1) == 0) return 0; // êµ¬ë§¤ X or ì‘ì„±í•  ë¦¬ë·° X
+				else return 1; // ë¦¬ë·° ì‘ì„± ê°€ëŠ¥
 			}
-			return -1; //Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğ
+			return -1; //ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-		return -1; // µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return -1; // ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 	
-	// write_review°¡ 0ÀÎ orderDetail µ¥ÀÌÅÍ°¡ ´ã±ä list¸¦ ¹İÈ¯
+	// write_reviewê°€ 0ì¸ orderDetail ë°ì´í„°ê°€ ë‹´ê¸´ listë¥¼ ë°˜í™˜
 	public List<OrderDetailDTO> orderList(String userId){	
 		try {
 			Class.forName(jdbc_driver);
@@ -201,7 +201,7 @@ public class OrderDAO {
 	}
 	
 	public int findOrderID(String userId, int productId) {
-		// order_detail Å×ÀÌºí¿¡¼­ product_id°¡ °°°í write_review°¡ 0ÀÎ Ç×¸ñÀÌ ¿©·¯°³ÀÏ¶§ order_id°¡ °¡Àå ÀÛÀº °ÍÀ» ¹İÈ¯
+		// order_detail í…Œì´ë¸”ì—ì„œ product_idê°€ ê°™ê³  write_reviewê°€ 0ì¸ í•­ëª©ì´ ì—¬ëŸ¬ê°œì¼ë•Œ order_idê°€ ê°€ì¥ ì‘ì€ ê²ƒì„ ë°˜í™˜
 		try {
 			Class.forName(jdbc_driver);
 			conn = DriverManager.getConnection(jdbc_url, id, pw);

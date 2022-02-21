@@ -31,9 +31,9 @@ public class ReviewDAO {
 		}
 	}
 
-	// ¸®ºä ¹øÈ£(review_id) ºÎ¿© ¸Þ¼Òµå
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£(review_id) ï¿½Î¿ï¿½ ï¿½Þ¼Òµï¿½
 	public int getNext() {
-		//ÇöÀç ¸®ºä °Ô½ÃÆÇÀ» ³»¸²Â÷¼øÀ¸·Î Á¶È¸ÇÏ¿© °¡Àå ¸¶Áö¸· ±ÛÀÇ ¹øÈ£¸¦ ±¸ÇÑ´Ù
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½
 		String sql = "select review_id from review order by review_id desc";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -41,15 +41,15 @@ public class ReviewDAO {
 			if(rs.next()) {
 				return rs.getInt(1) + 1;
 			}
-			return 1; //Ã¹ ¹øÂ° °Ô½Ã¹°ÀÎ °æ¿ì
+			return 1; //Ã¹ ï¿½ï¿½Â° ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 1; //µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù
+		return 1; //ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 
-	// ¸®ºä µî·Ï ¸Þ¼Òµå
-	 public void write(ReviewDTO review, String userID) { // °°Àº user_id product_id¿¡ ¸®ºä ¾´ »óÇ° order_detail write_review 1·Î ¸¸µé±â	
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
+	 public void write(ReviewDTO review, String userID) { // ï¿½ï¿½ï¿½ï¿½ user_id product_idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç° order_detail write_review 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½	
 		 try {
 				Class.forName(jdbc_driver);
 				conn = DriverManager.getConnection(jdbc_url, id, pw);
@@ -67,8 +67,8 @@ public class ReviewDAO {
 				
 				int update = pstmt.executeUpdate();
 				
-				if(update == 0) System.out.println("DB ¾÷µ¥ÀÌÆ® ½ÇÆÐ");
-				else System.out.println("DB ¾÷µ¥ÀÌÆ® ¼º°ø");
+				if(update == 0) System.out.println("DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½");
+				else System.out.println("DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½");
 			}
 			catch(Exception e) {
 				System.out.println(e);
@@ -101,15 +101,18 @@ public class ReviewDAO {
 		}
 	}
 	
-	// ¸®ºä ¸ñ·Ï º¸±â ¿ë ¸®½ºÆ® ¹ÝÈ¯
-	public List<ReviewDTO> reviewList(){		
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
+	public List<ReviewDTO> reviewList(int nSizePerPage, int nFirstNcno){		
 		try {
 			Class.forName(jdbc_driver);
 			conn = DriverManager.getConnection(jdbc_url, id, pw);
 			
-			String sql = "select review_id, product_name, grade, user_id, review_date from review as r join product as p where r.product_id=p.product_id order by review_id desc;";
+			String sql = "select review_id, product_name, grade, user_id, review_date from review as r join product as p where r.product_id=p.product_id order by review_id desc limit ? offset ?;";
 			pstmt = conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
+			
+			pstmt.setInt(1, nSizePerPage);
+			pstmt.setInt(2, nFirstNcno);			
+			rs = pstmt.executeQuery();
 			
 			List<ReviewDTO> list = new ArrayList<ReviewDTO>();
 			
@@ -130,7 +133,7 @@ public class ReviewDAO {
 		return null;
 	}
 	
-	// °³º° ¸®ºä ¹ÝÈ¯
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	public List<ReviewDTO> showReview(int reviewID) {
 		try {
 			Class.forName(jdbc_driver);
