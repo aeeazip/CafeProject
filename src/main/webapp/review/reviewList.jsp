@@ -18,7 +18,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <link href="../css/index.css" rel="stylesheet" type="text/css" />

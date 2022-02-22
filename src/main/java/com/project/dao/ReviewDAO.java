@@ -31,9 +31,9 @@ public class ReviewDAO {
 		}
 	}
 
-	// ���� ��ȣ(review_id) �ο� �޼ҵ�
+	// review 테이블에서 가장 큰 review_id + 1 인 수를 반환하는 함수
 	public int getNext() {
-		//���� ���� �Խ����� ������������ ��ȸ�Ͽ� ���� ������ ���� ��ȣ�� ���Ѵ�
+		// review 테이블에서 review_id를 내림차순하여 반환
 		String sql = "select review_id from review order by review_id desc";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -41,15 +41,15 @@ public class ReviewDAO {
 			if(rs.next()) {
 				return rs.getInt(1) + 1;
 			}
-			return 1; //ù ��° �Խù��� ���
+			return 1; // review 테이블에 데이터가 없는 경우 1 반환
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 1; //�����ͺ��̽� ����
+		return 1; // review 테이블에 데이터가 없는 경우 1 반환
 	}
 
-	// ���� ��� �޼ҵ�
-	 public void write(ReviewDTO review, String userID) { // ���� user_id product_id�� ���� �� ��ǰ order_detail write_review 1�� �����	
+	// review 테이블에 insert 하는 함수 
+	 public void write(ReviewDTO review, String userID) { 
 		 try {
 				Class.forName(jdbc_driver);
 				conn = DriverManager.getConnection(jdbc_url, id, pw);
@@ -67,8 +67,8 @@ public class ReviewDAO {
 				
 				int update = pstmt.executeUpdate();
 				
-				if(update == 0) System.out.println("DB ������Ʈ ����");
-				else System.out.println("DB ������Ʈ ����");
+				if(update == 0) System.out.println("DB 업데이트 성공");
+				else System.out.println("DB 업데이트 실패");
 			}
 			catch(Exception e) {
 				System.out.println(e);
@@ -82,6 +82,7 @@ public class ReviewDAO {
 			}
 	}
 	
+	 // 리뷰를 썼으면 order_detail의 write_review를 1로 만들어주는 함수 ( write_review가 0인 주문건만 리뷰 작성 가능)
 	public void changeStatus(int orderID, String userID, int productID) {
 		try {
 			Class.forName(jdbc_driver);
@@ -101,7 +102,7 @@ public class ReviewDAO {
 		}
 	}
 	
-	// ���� ��� ���� �� ����Ʈ ��ȯ
+	// review_id를 내림차순으로 nFirstNcn부터 10개의 review를 리스트로 반환하는 함수
 	public List<ReviewDTO> reviewList(int nSizePerPage, int nFirstNcno){		
 		try {
 			Class.forName(jdbc_driver);
@@ -133,7 +134,7 @@ public class ReviewDAO {
 		return null;
 	}
 	
-	// ���� ���� ��ȯ
+	// review 테이블 전체를 리스트로 반환하는 함수
 	public List<ReviewDTO> showReview(int reviewID) {
 		try {
 			Class.forName(jdbc_driver);
