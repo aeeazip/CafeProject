@@ -9,11 +9,13 @@
 <title></title>
 </head>
 <body>
+<!-- 2022-02-22 header_menu ¼öÁ¤-->
 	<div align="center" class="text-box">
 			<a class="detail-header-menu" href="./../index/index.jsp" >HOME</a>
 			<a class="detail-header-menu" href="./../index/index.jsp" >ABOUT US</a>
 			<a class="detail-header-menu" href="./../index/index.jsp?contentPage=./../product/menu.jsp" >MENU</a>
-			<a class="detail-header-menu" href="./../index/index.jsp" >NOTICE BOARD</a>
+			<a class="detail-header-menu" href="../qanda/list.jsp" >Q&A</a>
+			<a class="detail-header-menu" href="./../index/index.jsp?contentPage=../review/reviewList.jsp" >REVIEW</a>
 	</div>
 	
 	<div class="logo-box">
