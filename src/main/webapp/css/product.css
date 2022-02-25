@@ -109,12 +109,26 @@
 	height: 30p;
 }
 
+.btn-box{
+	display: flex;
+}
+
+.cart-btn{
+	width: 50%;
+	padding-right: 2px;
+}
+
+.oder-btn{
+	flex-grow: 1;
+	padding-left: 2px;
+}
+
 .detail-submit{
 	background-color: black;
     border:none;
     color:white;
     border-radius: 5px;
-    width: 49%;
+    width:100%;
     height:35px;
     font-size: 14pt;
     margin-top: 50px;

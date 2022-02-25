@@ -4,8 +4,8 @@
     
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="com.project.dto.*" %>
-<%@ page import="com.project.dao.*" %>
+<%@ page import="com.project.dto.*"%>
+<%@ page import="com.project.dao.*"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <%
 	String id = (String)session.getAttribute("id");
@@ -22,6 +22,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <link href="../css/reviewForm.css" rel="stylesheet" type="text/css" />

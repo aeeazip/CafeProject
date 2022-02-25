@@ -13,7 +13,7 @@
 	CartDAO cart_dao = new CartDAO();	
 	
 	String user_id = (String)session.getAttribute("id");
-	int product_id = Integer.parseInt(request.getParameter("menu_id")); 
+	int product_id = Integer.parseInt(request.getParameter("product_id")); 
 	int product_qty = Integer.parseInt(request.getParameter("menu_qty"));
 	
 	cart_dto.setUser_id(user_id);

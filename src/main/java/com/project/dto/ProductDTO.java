@@ -1,7 +1,6 @@
 package com.project.dto;
 
 public class ProductDTO {
-	
 	private int productID;
 	private String productNAME;
 	private String productCATEGORY;
@@ -9,7 +8,6 @@ public class ProductDTO {
 	private int productSTOCK;
 	private String productINTRO;
 	private String productIMG;
-	
 	public int getProductID() {
 		return productID;
 	}
@@ -52,5 +50,5 @@ public class ProductDTO {
 	public void setProductIMG(String productIMG) {
 		this.productIMG = productIMG;
 	}
-
+	
 }

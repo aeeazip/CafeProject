@@ -55,8 +55,8 @@ public class UserDAO {
 			
 			int update = pstmt.executeUpdate();
 			
-			if(update == 0) System.out.println("DB ¾÷µ¥ÀÌÆ® ½ÇÆĞ");
-			else System.out.println("DB ¾÷µ¥ÀÌÆ® ¼º°ø");
+			if(update == 0) System.out.println("DB ì—…ë°ì´íŠ¸ ì‹¤íŒ¨");
+			else System.out.println("DB ì—…ë°ì´íŠ¸ ì„±ê³µ");
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -70,7 +70,7 @@ public class UserDAO {
 		}
 	}
 	
-	//·Î±×ÀÎ ÁøÇàÇÏ´Â ÇÔ¼ö
+	//ë¡œê·¸ì¸ ì§„í–‰í•˜ëŠ” í•¨ìˆ˜
 	public int login(String user_id, String user_pwd) {
 		String sql = "SELECT user_pwd FROM user where user_id = ?";
 		
@@ -80,14 +80,14 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				if(rs.getString(1).equals(user_pwd)) return 1; //·Î±×ÀÎ ¼º°ø
-				else return 0; //ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡
+				if(rs.getString(1).equals(user_pwd)) return 1; //ë¡œê·¸ì¸ ì„±ê³µ
+				else return 0; //ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜
 			}
-			return -1; //Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğ
+			return -1; //ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””
 		}catch (Exception e) {
 			System.out.println(e);// TODO: handle exception
 		}
-		return -2; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·á
+		return -2; //ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë£Œ
 	}
 	
 	public boolean resign(String user_id, String user_pwd) {
@@ -110,4 +110,29 @@ public class UserDAO {
 		}
 		return false;
 	}
+	
+	//user ê°ì²´ ë°˜í™˜ - ì¶”ê°€
+		public UserDTO getUserInfo(String user_id) {		
+			String sql = "select * from user where user_id=?";
+			UserDTO user = new UserDTO();
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				rs = pstmt.executeQuery();
+				
+				rs.next();
+				user.setUserID(rs.getString("user_id"));
+				user.setUserPW(rs.getString("user_pwd"));
+				user.setUserName(rs.getString("user_name"));
+				user.setUser_address(rs.getString("user_address"));
+				user.setUser_phone(rs.getString("user_phonenum"));
+				user.setUser_email(rs.getString("user_email"));
+				rs.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			return user;
+		}
 }

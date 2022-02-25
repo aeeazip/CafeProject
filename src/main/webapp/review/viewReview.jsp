@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="com.project.dto.*" %>
-<%@ page import="com.project.dao.*" %>
+<%@ page import="com.project.dto.*"%>
+<%@ page import="com.project.dao.*"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <%
     int reviewId = Integer.parseInt(request.getParameter("reviewId"));
@@ -16,6 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <style>

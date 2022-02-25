@@ -6,6 +6,7 @@ public class CartDTO {
 	private int product_id;
 	private int product_qty;
 	
+	
 	public int getCart_id() {
 		return cart_id;
 	}
