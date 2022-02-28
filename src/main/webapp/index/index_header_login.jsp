@@ -14,13 +14,13 @@
 			<span class="header-menu" onclick="changeView1(1)" >ABOUT US</span>
 			<span class="header-menu" onclick="changeView1(2)" >MENU</span>
 			<span class="header-menu" onclick="changeView1(3)" >Q&A</span>
-			<span class="header-menu" onclick="changeView1(5)" >REVIEW</span> <!-- ¹Ù²ï ºÎºÐ -->
+			<span class="header-menu" onclick="changeView1(5)" >REVIEW</span>
 	</div>
 
 	<div class="logo-box">
 		<!-- 2022-02-22 ¼öÁ¤ -->
 		<a class="welcom-id" href="../index/index.jsp?contentPage=../cart/myCart.jsp"><%=session.getAttribute("id") %>´Ô</span>
-		<a class="mypage" href="./test.jsp">MY PAGE</a>
+		<a class="mypage" href="./../mypage/mypage.jsp">MY PAGE</a>
 	</div>
 </body>
 </html>

@@ -19,7 +19,7 @@
 	ResultSet rs = null;
 	
 	/** 게시판 제목 (html태그의 title 값) **/
-	String strProgramTitle = "Q&A";
+	String strProgramTitle = "ORDER";
 
 	/** MYSQL URL **/
 	String strJdbcUrl = "jdbc:mysql://localhost:3306/myShoppingmallDB";
@@ -39,23 +39,29 @@
 	/** 처리 명령어 **/
 	String command 	= "Write";
 	
-	/** 제목 **/
-	String title 	= "";
+	/** 게시글 번호 **/
+	int num = 1;	
 	
-	/** 작성자 **/
-	String writer 	= "";
+	/** 주문자 **/
+	String writer = "";
 	
-	/** 작성일 **/
+	/** 주문번호 **/
+	int o_num = 1;
+	
+	/** 주문일자 **/
 	String date = "";
 	
-	/** 내용 **/
-	String content = "";
+	/** 상품정보 **/
+	String p_info = "";
 	
-	/** 비밀번호 **/
-	String password = "";
+	/** 상품수량 **/
+	int p_num = 0;
 	
-	/** 게시글 번호 **/
-	int num = 1;
+	/** 상품금액 **/
+	int p_price = 0;
+	
+	/** 리뷰여부 **/
+	int review = 0;
 	
 	/** 게시물 전체 건수 **/
 	int nTotalRecord = 0;
@@ -64,7 +70,7 @@
 	int nTotalPage = 1;
 	
 	/** 페이지 당 출력 개수 **/
-	int nSizePerPage = 10;
+	int nSizePerPage = 20;
 	
 	/** 페이지 블럭(이전, 다음) **/
 	int nPageBlockSize = 10;

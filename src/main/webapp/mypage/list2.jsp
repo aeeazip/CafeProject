@@ -2,9 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="com.project.dto.*"%>
+<%@ page import="com.project.dao.*"%>
 <!-- 공통파일 INCLUDE -->    
-<%@ include file="global.jsp" %>  
-
+<%@ include file="global2.jsp" %>  
+<%request.setCharacterEncoding("UTF-8"); %>
 <% 
 	try{
 		nPageNum = Integer.valueOf(request.getParameter("pageNum"));
@@ -19,6 +22,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type="text/css" href="./css/qanda.css" rel="stylesheet" />
 <title><%=strProgramTitle %></title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(e){
+			genRowspan("first");
+		});
+
+		function genRowspan(className){
+			$("." + className).each(function() {
+				var rows = $("." + className + ":contains('" + $(this).text() + "')");
+				if (rows.length > 1) {
+					rows.eq(0).attr("rowspan", rows.length);
+					rows.not(":eq(0)").remove();
+				}
+			});
+		}
+</script>
 <style>  
 	h2 {
 	    font-family: 'Nunito Sans', 'Noto Sans KR', sans-serif;
@@ -40,7 +59,7 @@
 	    font-weight: 400;
 	    border-spacing: 0;
 	    border-collapse: collapse;
-	    line-height: 60px;
+	    line-height: 20px;
 	    color: #4e4c4a;
 	    font-size: 13px;
 	    letter-spacing: -0.3px;
@@ -66,7 +85,7 @@
 	    box-sizing: border-box;
 	    padding: 0 11px;
 	    border: 1px solid transparent;
-	    font-size: 13px;
+	    font-size: 10px;
 	    font-weight: 300;
 	    text-decoration: none;
 	    vertical-align: middle;
@@ -76,12 +95,37 @@
 	    transition: 0.2s ease-in-out;
 	    color: #ffffff;
 	    background-color: #222222;
-	    height: 40px;
-	    line-height: 40px;
+	    height: 30px;
+	    line-height: 30px;
 	    word-break: keep-all;
 	    word-wrap: break-word;
-	    margin-left: 6px;
-	    width: 100px;
+	    margin-left: 3px;
+	    width: 65px;
+	}
+	
+	a.view {
+		font-family: 'Nunito Sans', 'Noto Sans KR', sans-serif;
+	    cursor: pointer;
+	    display: inline-block;
+	    box-sizing: border-box;
+	    padding: 0 11px;
+	    font-size: 10px;
+	    font-weight: 300;
+	    text-decoration: none;
+	    vertical-align: middle;
+	    letter-spacing: -0.3px;
+	    color: #4e4c4a;
+	    text-align: center;
+	    white-space: nowrap;
+	    transition: 0.2s ease-in-out;
+	    background-color: transparent;
+	    border: 1px solid #eeeeee;
+	    height: 30px;
+	    line-height: 30px;
+	    word-break: keep-all;
+	    word-wrap: break-word;
+	    margin-left: 3px;
+	    width: 65px;
 	}
 	
 	a.main {
@@ -156,9 +200,10 @@
 				Class.forName(jdbc_driver);
 				conn = DriverManager.getConnection(jdbc_url, id, pw);
 			
-			stmt = conn.createStatement();
+			stmt = conn.createStatement();	
 			
-			strQuery = "SELECT COUNT(qa_id) FROM qanda";								// 게시물 전체 건수 조회
+			strQuery = "SELECT COUNT(order_order_id) FROM order_detail WHERE order_user_user_id='" + String.valueOf(session.getAttribute("id")) + "'";	// 게시물 전체 건수 조회
+			stmt.execute(strQuery);
 			
 			rs = stmt.executeQuery(strQuery);
 			
@@ -181,73 +226,70 @@
 %>
 		<br><br>
 		<tr>
-			<td width="50"  align="center" height="30" bgcolor="#C4C8CC"><font color="#ffffff"><b>No.</b></font></td>
-			<td width="400" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>Title</b></font></td>
-			<td width="100" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>Name</b></font></td>
-			<td width="100" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>Date</b></font></td>
-			<td width="70" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>Hits</b></font></td>
+			<!-- <td width="50"  align="center" height="30" bgcolor="#C4C8CC"><font color="#ffffff"><b>No.</b></font></td> -->
+			<td width="130" align="center" height="75" bgcolor="#C4C8CC"><font color="#ffffff"><b>[주문번호]<br>주문일자</b></font></td>
+			<td width="390" align="center" height="75" bgcolor="#C4C8CC"><font color="#ffffff"><b>상품정보</b></font></td>
+			<td width="70" align="center" height="75" bgcolor="#C4C8CC"><font color="#ffffff"><b>수량</b></font></td>
+			<td width="70" align="center" height="75" bgcolor="#C4C8CC"><font color="#ffffff"><b>상품구매금액</b></font></td>
+			<td width="100" align="center" height="75" bgcolor="#C4C8CC"><font color="#ffffff"><b>상품후기</b></font></td>
 		</tr>
 <%			
 			nFirstNcno = ((nPageNum -1) * nSizePerPage);
 
 			//out.write("nFirstNcno:" + nFirstNcno + "<br>");			
 			
-			strQuery = "SELECT";													//게시물 조회 쿼리
-			strQuery += " 	 qa_id 			\n";
-			strQuery += " 	,qa_title 		\n";
-			strQuery += " 	,user_id 		\n";
-			strQuery += " 	,qa_date 		\n";
-			strQuery += " 	,qa_count		\n";
-			strQuery += " 	,qa_content		\n";
-			strQuery += " 	,qa_password	\n";
-			strQuery += " 	,qa_ref 		\n";
-			strQuery += " 	,qa_restep 		\n";
-			strQuery += " 	,qa_relevel 	\n";
-			strQuery += " 	FROM \n";
-			strQuery += " 	qanda \n";
-			strQuery += " 	ORDER BY qa_ref DESC, qa_restep ASC \n";
-			strQuery += " 	LIMIT "+nSizePerPage+" OFFSET "+nFirstNcno+" \n";
-
+			strQuery = "SELECT";			//게시물 조회 쿼리
+			strQuery += " 	 user_user_id 					\n";
+			strQuery += " 	,order_id 						\n";
+			strQuery += " 	,order_date 					\n";
+			strQuery += " 	,product_name 					\n";
+			strQuery += " 	,product_price					\n";
+			strQuery += " 	,detail_num						\n";
+			strQuery += " 	,write_review					\n";
+			strQuery += " 	,product_id						\n";
+			strQuery += " 	,review_id						\n";
+			strQuery += " 	FROM 							\n";
+			strQuery += " 	order_detail 					\n";
+			strQuery += " 	LEFT JOIN orders  				\n";
+			strQuery += " 	ON order_order_id = order_id  	\n";
+			strQuery += " 	JOIN product  					\n";
+			strQuery += " 	ON product_product_id = product_id 	\n";
+			strQuery += " 	LEFT JOIN review  					\n";
+			strQuery += " 	ON product_product_id = review_product_id AND order_order_id = review_order_id	\n";
+			strQuery += " 	WHERE 							\n";
+			strQuery += " 	order_user_user_id='" + String.valueOf(session.getAttribute("id"))	+ "'\n";
+			strQuery += " 	ORDER BY order_date DESC  		\n";
+		 	strQuery += " 	LIMIT "+nSizePerPage+" OFFSET "+nFirstNcno+" \n";
+		 	
+		 	stmt.execute(strQuery);
+		 	
 			//out.write("QUERY : " + strQuery);										//화면 DEBUG
 			
 			rs = stmt.executeQuery(strQuery);
 			
 			int idx = nTotalRecord - nFirstNcno;									//화면에 출력할 게시물 번호
-			
-			int relevel = 0;														//답글레벨 얻어어기 위한 변수
 				
 			while(rs.next()){														//rs.next가 true면 게시물 리스트 출력
-				
-				String strRE = " ";													//답글계층만큼 [RE]를 붙이기 위한 변수
-				relevel = rs.getInt("qa_relevel");
-							
-				for(int i=1; i <= relevel; i++ ){
-					strRE += "&nbsp<span> RE </span>&nbsp";
-				}
-%>
+%> 
 		<tr border-bottom="1px solid #6d6d6d">
 			<!--  글 번호 idx 출력 -->
-			<td width="100" height="25" align="center"><%= idx %></td>
-			
-			<!--  글 제목 출력 -->
-			<td width="450">
-				&nbsp&nbsp&nbsp<%=strRE%> 
-				<a href="pass_ok.jsp?num=<%=rs.getInt("qa_id")%>" target="_self" style="text-decoration:none; color: #6d6d6d;"><%=rs.getString("qa_title")%></a>
-				&nbsp<input type="image" src="img/ico_lock.jpg">
+			<!-- <td width="50" height="25" align="center"><%= idx %></td> -->
+			<td class="first" style="border: 1px solid #eeeeee" width="130" height="75" align="center">[<%=rs.getInt("order_id")%>]<br>
+			<%= rs.getString("order_date").substring(0,10)%></td>
+			<td width="390" height="75" align="center">
+			<a href="./../product/menu_detail.jsp?product_id=<%=rs.getInt("product_id")%>" target="_self" style="text-decoration:none; color: #6d6d6d;"><%=rs.getString("product_name")%></a>
 			</td>
-<%
-			String name = rs.getString("user_id");
-			if("admin".equals(name))	{
-				name = name.replace("admin" , " ");
-			}
-			else {
-				name = name.replaceAll("(?<=.{1})." , "*");
-			}
-
-%>
-			<td width="100" align="center"><%= name %></td>
-			<td width="100" align="center"><%= rs.getString("qa_date").substring(0,10) %></td>
-			<td width="50" align="center"><%= rs.getInt("qa_count") %></td>
+			<td width="70" height="75" align="center"><%= rs.getInt("detail_num") %></td>
+			<td width="70" height="75" align="center"><%= rs.getInt("product_price") * rs.getInt("detail_num")%>원</td>
+			<td width="100" height="75" align="center">
+			<%
+			if(rs.getInt("write_review") == 0){
+			%><a class="write" href="./../index/index.jsp?contentPage=./../review/chooseProduct.jsp">후기쓰기</a>
+			<%
+			}else if(rs.getInt("write_review") == 1){
+ 			%><a class="view" href="./../index/index.jsp?contentPage=./../review/viewReview.jsp?reviewId=<%=rs.getInt("review_id")%>">후기보기</a>
+			<%} %>
+			</td>
 		</tr>
 <%
 				idx--;																//화면출력 번호 1씩 감소	
@@ -339,10 +381,7 @@
 	<table width="75%" cellpadding="0" cellspacing="0" >
 		<tr>
 		<td height="30" align="left">
-			<a class="main" href="../index/index.jsp">MAIN</a>
-		</td>
-		<td height="30" align="right">
-			<a class="write" href="writeForm.jsp">WRITE</a>
+			<a class="main" href="./mypage.jsp">MYPAGE</a>
 		</td>
 		</tr>
 	</table>

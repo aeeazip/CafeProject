@@ -4,6 +4,15 @@
     
 <%@ include file="global.jsp" %>  
 
+<%
+	try{
+		num = Integer.valueOf(request.getParameter("num"));	
+		
+	}catch(Exception e){
+		num = 1;
+	}
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,11 +31,11 @@
 	}
 	
 	.body{
-		font-family:'Nunito Sans', 'Noto Sans KR', sans-serif;
+		font-family:"굴림";
 		font-size:"5pt"; 
 		font-weight:"bold"; 
 	}
-	
+
 	.hidden {
 	
 	    display:none;
@@ -52,7 +61,7 @@
 	    margin: 30px 0 0;
 	    border: 1px solid #eeeeee;
 	}
-
+	
 	tr {
 		border: 1px solid #eeeeee;
 	}
@@ -109,8 +118,9 @@
 </style>
 
 <script type="text/javascript">
-	function fnWrite(){
+	function fnUpdate(num){
 		var frm = document.boardForm;
+		frm.num.value = num;
 		frm.action = "qandaProc.jsp";
 		frm.submit();
 	}
@@ -133,8 +143,9 @@
 </head>
 <body>
 <div align="center">
-<form name="boardForm" method="post" onsubmit="return validate();" action="javascript:fnWrite();">
-	<input type="hidden" name="command" value="Write"/>
+<form name="boardForm" method="post" onsubmit="return validate();" action="javascript:fnUpdate('<%=num %>');">
+	<input type="hidden" name="command" value="Update"/>
+	<input type="hidden" name="num" value="<%=num %>">
 	
 	<br><br><br><br><br><br>
 	
@@ -150,51 +161,73 @@
 	
 	<br><br><br>
 	
-	<!-- FORM START -->
+<%
+		String jdbc_driver = "com.mysql.cj.jdbc.Driver";
+		String jdbc_url = "jdbc:mysql://mydbinstance.ctvgpvyuejsa.ap-northeast-2.rds.amazonaws.com:3306/myShoppingmallDB?serverTimezone=UTC";
+		
+		String id = "shun04321";
+		String pw = "awstbs421!";
+		
+		try{
+			Class.forName(jdbc_driver);
+			conn = DriverManager.getConnection(jdbc_url, id, pw);
+		
+		strQuery = "SELECT * FROM qanda WHERE qa_id="+num+" ORDER BY qa_id DESC";
+		
+		stmt = conn.createStatement();		
+		rs = stmt.executeQuery(strQuery);
+		
+		//해당 게시물이 있으면...
+		if(rs.next()){
+%>	
+	<!-- CONTENT START -->
 	<table class="list" width="800" cellpadding="3" cellspacing="1">
+	
 		<tr class="hidden">
 			<td width="80" class="label" align="center" ><font color="#ffffff"><b>작성자</b></font></td>
-			<td width="800" style="border:1px solid;">
-			<input type="text" name="writer" class="input" value="<%=session.getAttribute("id") %>">
+			<td width="800" style="border:1px solid;" >
+			<input type="text" name="writer" value="<%= rs.getString("user_id") %>"  class="input">
 			</td>
 		</tr>
 		<tr>
-			<td width="80" class="label" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>Title</b></font></td>
-			<td width="800" style="border-bottom:0px solid;">
-			&nbsp&nbsp&nbsp&nbsp<select name="title" class="input" style="vertical-align:middle; height:30px;">
-				<option value="배송 문의">배송 문의</option>
-				<option value="제품 문의">제품 문의</option>
-				<option value="주문 문의">주문 문의</option>
-				<option value="결제 문의">결제 문의</option>
-				<option value="기타 문의">기타 문의</option>
-			</select>
+			<td width="80" class="label" align="center"><font color="#ffffff"><b>Title</b></font></td>
+			<td width="800" style="border:0px solid;">
+			&nbsp&nbsp&nbsp&nbsp<input type="text" name="title" value="<%= rs.getString("qa_title") %>" class="input" style="vertical-align:middle;" readonly>
 			</td>
-		</tr>
 		<tr>
-			<td colspan='2' width="680" style="border:0px solid;" >
-			<textarea name="content" class="textarea"></textarea>
+			<td colspan='2' width="680" style="border:0px solid;">
+			<textarea name="content" class="textarea"><%=rs.getString("qa_content") %></textarea>
 			</td>
 		</tr>
 		<tr class="hidden">
-			<td width="80" class="label" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>PASSWORD</b></font></td>
-			<td width="800" style="border:0px solid;">
-			&nbsp&nbsp&nbsp&nbsp<input type="password" name="password" class="input" style="vertical-align:middle;" value="<%=session.getAttribute("password") %>">
+			<td width="80" class="label" align="center"><font color="#ffffff"><b>PASSWORD</b></font></td>
+			<td width="800" style="border:1px solid;">
+			<input type="password" name="password" value="<%= rs.getString("qa_password") %>" class="input">
 			</td>
-		</tr>
 		<tr>
-			<td width="80" class="label" align="center" bgcolor="#C4C8CC"><font color="#ffffff"><b>SECRET</b></font></td>
+		<tr>
+			<td width="80" class="label" align="center" ><font color="#ffffff"><b>SECRET</b></font></td>
 			<td width="800" style="border:0px solid;" >
 			&nbsp&nbsp&nbsp&nbsp<input name="secret" type="radio" value="Y" onclick="return false">공개글
 			&nbsp<input name="secret" type="radio" value="N" checked onclick="return false">비밀글
 			</td>
-		</tr>		
+		</tr>
 	</table>
-	<!-- FORM END -->
+	<!-- CONTENT END -->
 	
+<%
+		}
+		rs.close();
+		stmt.close();
+		conn.close();
+	}catch(Exception e){
+		out.write("VIEW PAGE ERROR : " + e.getMessage());
+	}
+%>	
 	<!-- 기능버튼 -->
 	<table width="75%" cellpadding="3" cellspacing="1">
 		<tr>
-			<td width="80" height="30" ></td>
+			<td width="80" height="30" bgcolor=""></td>
 			<td width="800" align="right">
 				<input class="write" type="submit" value="WRITE" border="0">
 				<a class="cancel" href="list.jsp" target="_self">CANCEL</a>

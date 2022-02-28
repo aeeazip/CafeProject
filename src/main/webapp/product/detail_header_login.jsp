@@ -18,7 +18,8 @@
 			<a class="detail-header-menu" href="../qanda/list.jsp" >Q&A</a>
 			<a class="detail-header-menu" href="./../index/index.jsp?contentPage=../review/reviewList.jsp" >REVIEW</a>
 	</div>
-
+	
+	<!-- 2022-02-22 수정 : 회원이름 클릭하면 장바구니로 이동 -->
 	<div class="logo-box">
 		<a class="welcom-id" href="../index/index.jsp?contentPage=../cart/myCart.jsp"><%=session.getAttribute("id") %>님</a>
 		<a class="mypage" href="./test.jsp">MY PAGE</a>

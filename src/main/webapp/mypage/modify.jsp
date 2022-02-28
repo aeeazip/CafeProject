@@ -1,10 +1,7 @@
-<!-- 이시윤 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.project.dao.UserDAO.*"%>
+<%@ page import="com.project.dto.*"%>
+<%@ page import="com.project.dao.*"%>
 
-<%@ page import="java.io.*" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="java.util.*" %>
 
 <!DOCTYPE html>
 <html>
@@ -86,7 +83,6 @@
 	tr {
 		border: 1px solid #eeeeee;
 	}
-
 	h2 {
 		font-family: 'Nunito Sans', 'Noto Sans KR', sans-serif;
 	    font-size: 25px;
@@ -124,10 +120,8 @@
 function idCheck() {
 	var id = join.id.value;
 	var url = "./idCheck.jsp?id=" + id;
-
 	window.open(url, "get", "height = 180, width = 300");
 }
-
             function validate() {
                 var re1 = /^[a-z0-9]{4,16}$/ // 아이디가 적합한지 검사할 정규식
                 var re2 = /^[a-zA-Z0-9#?!@$%^&*-]{8,16}$/ // 비밀번호가 적합한지 검사할 정규식
@@ -149,7 +143,6 @@ function idCheck() {
  
                 // ------------ 이메일 까지 -----------
  
-
 	 			
                 if(!check(re1,user_id,"아이디는 4~16자의 영문 소문자,숫자로만 입력")) {
                     return false;
@@ -235,7 +228,6 @@ function idCheck() {
             function idCheck() {
             	var id = join.id.value;
             	var url = "./idCheck.jsp?id=" + id;
-
                 var width = "300";
                 var height = "180";
                 var left = Math.ceil(( window.screen.width - width )/2);
@@ -303,15 +295,28 @@ function idCheck() {
 </head>
 
 <body>
+
+<!-- 정민지 -->
+
+	<%
+		UserDAO udao = new UserDAO();
+
+		String user_id = null;
+		if(session.getAttribute("id") != null) 
+			user_id = (String)session.getAttribute("id");
+		
+		UserDTO udto = udao.getUser(user_id);
+	%>
+	
 <div align="center">
-		<form name="join" onsubmit="return validate();" method="post" action="memberDB.jsp">
+		<form name="join" onsubmit="return validate();" method="post" action="./../mypage/modify_action.jsp">
 		<br><br><br><br><br><br>
 	
 		<!-- TITLE START -->
 		<table width="800" cellpadding="0" cellspacing="0">
 			<tr>
 				<td width="800" height="50">
-				<h2>SIGN UP</h2>
+				<h2>Modify</h2>
 				</td>
 			</tr>
 		</table>
@@ -324,9 +329,8 @@ function idCheck() {
 		<td align="center" width="150" height="50" bgcolor="#eeeeee">아이디<font color="blue">*</font></td>
 		<td>
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<input name="id" id="id" type="text" size="15" maxlength="16">
-		&nbsp&nbsp<input class="button" type="button" value="중복체크" onClick="idCheck()">
-		&nbsp<font size="1">(영문 소문자/숫자, 4~16자)</font>
+		<input name="id" id="id" type="text" value="<%=udto.getUserID()%>" readonly="readonly" size="15" maxlength="16">
+		&nbsp *변경불가능
 		</td>
 	</tr>
 	<tr>
@@ -348,7 +352,7 @@ function idCheck() {
 		<td align="center" width="150" height="50" bgcolor="#eeeeee">이름<font color="blue">*</font></td>
 		<td>
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<input name="name" id="name" type="text" size="15">
+		<input name="name" id="name" value="<%=udto.getUserName()%>" type="text" size="15"> 
 		</td>
 	</tr>
 	<tr>
@@ -372,7 +376,7 @@ function idCheck() {
 		<td align="center" width="150" height="50" bgcolor="#eeeeee">이메일<font color="blue">*</font></td>
 		<td>
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<input name="email" id="email" type="text" size="30">
+		<input name="email" id="email" type="text" size="30" value="<%=udto.getUser_email()%>">
 		</td>
 	</tr>
 		<tr>
@@ -393,7 +397,7 @@ function idCheck() {
 	</tr> 
 	</table>
 	<br><br>
-		<h3 align="center"><input class="joinus" type="submit" value="JOIN US"></h3>
+		<h3 align="center"><input class="joinus" type="submit" value="Modify"></h3>
 	</form>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </div>

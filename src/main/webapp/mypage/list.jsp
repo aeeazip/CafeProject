@@ -2,9 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
 <!-- 공통파일 INCLUDE -->    
 <%@ include file="global.jsp" %>  
-
+<%request.setCharacterEncoding("UTF-8"); %>
 <% 
 	try{
 		nPageNum = Integer.valueOf(request.getParameter("pageNum"));
@@ -156,9 +157,10 @@
 				Class.forName(jdbc_driver);
 				conn = DriverManager.getConnection(jdbc_url, id, pw);
 			
-			stmt = conn.createStatement();
+			stmt = conn.createStatement();	
 			
-			strQuery = "SELECT COUNT(qa_id) FROM qanda";								// 게시물 전체 건수 조회
+			strQuery = "SELECT COUNT(qa_id) FROM qanda WHERE (user_id='" + String.valueOf(session.getAttribute("id")) + "' OR user_id='admin') AND qa_password='" + String.valueOf(session.getAttribute("password")) + "'\n";	// 게시물 전체 건수 조회
+			stmt.execute(strQuery);
 			
 			rs = stmt.executeQuery(strQuery);
 			
@@ -205,9 +207,13 @@
 			strQuery += " 	,qa_relevel 	\n";
 			strQuery += " 	FROM \n";
 			strQuery += " 	qanda \n";
+			strQuery += " 	WHERE \n";
+			strQuery += " 	(user_id='" + String.valueOf(session.getAttribute("id")) + "' OR user_id='admin') AND qa_password='" + String.valueOf(session.getAttribute("password")) + "'\n";
 			strQuery += " 	ORDER BY qa_ref DESC, qa_restep ASC \n";
-			strQuery += " 	LIMIT "+nSizePerPage+" OFFSET "+nFirstNcno+" \n";
-
+		 	strQuery += " 	LIMIT "+nSizePerPage+" OFFSET "+nFirstNcno+" \n";
+		 	
+		 	stmt.execute(strQuery);
+		 	
 			//out.write("QUERY : " + strQuery);										//화면 DEBUG
 			
 			rs = stmt.executeQuery(strQuery);
@@ -339,7 +345,7 @@
 	<table width="75%" cellpadding="0" cellspacing="0" >
 		<tr>
 		<td height="30" align="left">
-			<a class="main" href="../index/index.jsp">MAIN</a>
+			<a class="main" href="./mypage.jsp">MYPAGE</a>
 		</td>
 		<td height="30" align="right">
 			<a class="write" href="writeForm.jsp">WRITE</a>
