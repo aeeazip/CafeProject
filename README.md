@@ -3,7 +3,7 @@
 
 <br>
 
-### 핵심 기능
+## 핵심 기능
 - 카페 소개 및 메뉴판 페이지 제공
 - 주문 및 리뷰 기능
 - 장바구니 및 마이페이지 기능
@@ -11,7 +11,7 @@
 
 <br>
 
-### 사용 기술
+## 사용 기술
 [![Java Badge](https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white)](https://github.com/aeeazip/Algorithm)&nbsp;
 ![JS Badge](https://img.shields.io/badge/Java%20Script-F7DF1E?style=flat&logo=JavaScript&logoColor=black)&nbsp;
 ![HTML5 Badge](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white)&nbsp;
@@ -25,7 +25,7 @@
 
 <br>
 
-### 시연
+## 시연
 프로젝트 중 일부 사진만 첨부합니다.
 
 <br>
